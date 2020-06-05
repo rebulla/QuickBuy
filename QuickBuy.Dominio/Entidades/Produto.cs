@@ -9,7 +9,8 @@
 
         public override void Validate()
         {
-            throw new System.NotImplementedException();
+            if (Preco <= 0)
+                AdicionarCritica("Produto com valor inválido.");
         }
     }
 }
