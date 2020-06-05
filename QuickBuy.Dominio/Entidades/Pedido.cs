@@ -1,11 +1,12 @@
 ﻿using QuickBuy.Dominio.ObjetoDeValor;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Principal;
 
 namespace QuickBuy.Dominio.Entidades
 {
-    public class Pedido
+    public class Pedido : Entidade
     {
         public int Id { get; set; }
         public DateTime DataPedido { get; set; }
@@ -30,5 +31,18 @@ namespace QuickBuy.Dominio.Entidades
 
 
         public ICollection<ItemPedido> ItensPedido { get; set; }
+
+        public override void Validate()
+        {
+            LimparMensagensValidacao();
+            if (!ItensPedido.Any())
+            {
+                AdicionarCritica("Pedido não pode ficar sem itens.");
+            }
+            if (string.IsNullOrEmpty(CEP))
+            {
+                AdicionarCritica("CEP deve ser preenchido.");
+            }
+        }
     }
 }
